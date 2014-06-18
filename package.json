@@ -13,5 +13,14 @@
   "dependencies": {
     "lodash": "2.4.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nomic/field-filter.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/nomic/field-filter/issues"
+  },
+  "homepage": "https://github.com/nomic/field-filter"
 }
