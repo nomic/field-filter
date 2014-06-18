@@ -229,4 +229,31 @@ describe('Filter', function () {
       m: 'm'
     });
   });
+
+  it('supports array index specification', function () {
+    var input = [
+      {
+        a: 'a',
+        b: [
+          'c',
+          'd'
+        ]
+      },
+      {
+        e: 'e'
+      }
+    ];
+
+    var filterString = '0(a,b/1)';
+
+    expect(filter(filterString, input)).to.deep.equal([
+      {
+        a: 'a',
+        b: [
+          undefined,
+          'd'
+        ]
+      }
+    ]);
+  });
 });

@@ -8,7 +8,7 @@ function filter(filterStr, source) {
     return source;
   }
 
-  if (Array.isArray(source)) {
+  if (isNaN(parseInt(filterStr[0])) && Array.isArray(source)) {
     return _.map(source, _.partial(filter, filterStr));
   }
 
@@ -81,7 +81,13 @@ function filter(filterStr, source) {
     }
 
     result[key] = source[key];
-  }, {});
+  }, Array.isArray(source) ? [] : {});
 
-  return result;
+  // replace empty array elements with `undefined` - arrays are odd like that
+  return !Array.isArray(result) ? result : _.map(result, function (val) {
+    if (_.isUndefined(val)) {
+      return undefined;
+    }
+    return val;
+  });
 }

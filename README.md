@@ -39,6 +39,7 @@ var input = {
   }
 };
 
+// () and / to sub-select
 var filterString = 'a( b/c( d/e ) , g)';
 
 filter(filterString, input)
@@ -57,7 +58,7 @@ filter(filterString, input)
   }
 }
 
-
+// wildcard *
 var input = {
   a: {
     b: {
@@ -106,4 +107,32 @@ filter(filterString, input)
   },
   m: 'm'
 });
+
+
+// array index
+var input = [
+  {
+    a: 'a',
+    b: [
+      'c',
+      'd'
+    ]
+  },
+  {
+    e: 'e'
+  }
+];
+
+var filterString = '0(a,b/1)';
+
+filter(filterString, input)
+[
+  {
+    a: 'a',
+    b: [
+      undefined,
+      'd'
+    ]
+  }
+]);
 ```
