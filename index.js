@@ -6,8 +6,6 @@ module.exports = {
   parseFilter: parseFilter
 };
 
-//TODO: add validation fn
-
 function parseFilter(filterStr) {
   var openParens = 0;
   var keys = _.filter(_.map(_.reduce(filterStr, function (result, letter) {
@@ -55,8 +53,23 @@ function parseFilter(filterStr) {
   }, {});
 }
 
-function filter(filterStr, source) {
+function filter(filterStr, source, requiredStr) {
+  var required = parseFilter(requiredStr);
+
+  if (!containsRequired(required, source)) {
+    return null;
+  }
+
   return _filter(parseFilter(filterStr), source);
+}
+
+function containsRequired(required, source) {
+  return _.every(required, function (subRequires, require) {
+    if (source[require] === undefined) {
+      return false;
+    }
+    return containsRequired(subRequires, source[require]);
+  });
 }
 
 function _filter(fields, source) {

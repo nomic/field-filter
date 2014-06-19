@@ -301,3 +301,39 @@ describe('Filter', function () {
     });
   });
 });
+
+describe('Required', function () {
+  it('requires', function () {
+    var input = {
+      a: 'a'
+    };
+
+    var requireString = 'b/c';
+
+    expect(filter('*', input, requireString)).to.equal(null);
+  });
+
+  it('passes required', function () {
+    var input = {
+      a: {
+        b: {
+          c: 'c'
+        },
+        d: 'd'
+      },
+      e: 'e'
+    };
+
+    var requireString = 'a(b/c,d)';
+
+    expect(filter('*', input, requireString)).to.deep.equal({
+      a: {
+        b: {
+          c: 'c'
+        },
+        d: 'd'
+      },
+      e: 'e'
+    });
+  });
+});
