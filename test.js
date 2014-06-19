@@ -1,8 +1,38 @@
 'use strict';
 
-var filter = require('./index');
+var filter = require('./index').filter;
+var parseFilter = require('./index').parseFilter;
 var chai = require('chai');
 var expect = chai.expect;
+
+describe('parseFilter', function () {
+  it('generates a filter object', function () {
+    var input = 'a,b/c,d(e,f),g/*/h,i/*(j,k/l)';
+    expect(parseFilter(input)).to.deep.equal({
+      a: null,
+      b: {
+        c: null
+      },
+      d: {
+        e: null,
+        f: null
+      },
+      g: {
+        '*': {
+          h: null
+        }
+      },
+      i: {
+        '*': {
+          j: null,
+          k: {
+            l: null
+          }
+        }
+      }
+    });
+  });
+});
 
 describe('Filter', function () {
   it('basic keys', function () {
@@ -255,5 +285,19 @@ describe('Filter', function () {
         ]
       }
     ]);
+  });
+
+  it('ignores fields that dont exist', function () {
+    var input = {
+      a: {
+        b: 'b'
+      }
+    };
+
+    var filterString = 'a/c/d';
+
+    expect(filter(filterString, input)).to.deep.equal({
+      a: {}
+    });
   });
 });
