@@ -135,4 +135,13 @@ filter(filterString, input)
     ]
   }
 ]);
+
+// required vars
+var input = {
+  a: 'a'
+};
+
+var requireString = 'b/c';
+
+expect(filter('*', input, requireString)).to.equal(null);
 ```
