@@ -287,6 +287,33 @@ describe('Filter', function () {
     ]);
   });
 
+  it('supports nested array index specification', function () {
+    var input = {
+      a: [{
+        b: [
+          'b',
+          'x'
+        ],
+        x: 'x'
+      },{
+        x: 'x'
+      }],
+      c: 'c'
+    };
+
+    var filterString = 'a/0/b(0)';
+
+    expect(filter(filterString, input)).to.deep.equal({
+      a: [
+        {
+          b: [
+            'b'
+          ]
+        }
+      ]
+    });
+  });
+
   it('ignores fields that dont exist', function () {
     var input = {
       a: {
