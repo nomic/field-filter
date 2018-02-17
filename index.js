@@ -31,7 +31,7 @@ function parseFilter(filterStr) {
   return _.transform(keys, function (result, key) {
     var top, rest;
 
-    if (!_.contains(key, '(') && !_.contains(key, '/')) {
+    if (!_.includes(key, '(') && !_.includes(key, '/')) {
       result[key] = null;
       return;
     }
@@ -77,7 +77,7 @@ function _filter(fields, source) {
     return source;
   }
 
-  var hasNumber = _.any(Object.keys(fields), function (fieldName) {
+  var hasNumber = _.some(Object.keys(fields), function (fieldName) {
     return !isNaN(parseInt(fieldName));
   });
 
@@ -91,7 +91,7 @@ function _filter(fields, source) {
       if (subFields) {
         var usedKeys = Object.keys(result);
         _.forEach(_.keys(source), function (top) {
-          if (!_.contains(usedKeys, top)) {
+          if (!_.includes(usedKeys, top)) {
             result[top] = _filter(subFields, source[top]);
           }
         });
